@@ -3,7 +3,7 @@ package com.syf.interview.imageresource.model;
 import lombok.Data;
 
 @Data
-public class ImageDetails {
+public class ImageMetaData {
 	
 	private String imageName;
 	private String title;

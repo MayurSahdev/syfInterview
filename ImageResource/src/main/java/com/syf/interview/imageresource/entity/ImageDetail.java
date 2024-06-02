@@ -1,5 +1,7 @@
 package com.syf.interview.imageresource.entity;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,14 +15,17 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Builder
-@Table(name = "users")
+@Table(name = "image_detail")
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class ImageDetail {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+	
 	private String userName;
-    private String password;
+	private String imageName;
+	private Date createdDate;
+
 }

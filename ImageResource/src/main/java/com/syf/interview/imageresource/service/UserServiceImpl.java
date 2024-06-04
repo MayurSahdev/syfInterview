@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
 	
 	@Autowired
 	private KafkaProducer kafkaProducer;
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public User registerUser(UserModel userModel) {
-		User user = User.builder().userName(userModel.getUserName())
+		User user = User.builder().username(userModel.getUserName())
 				.password(passwordEncoder.encode(userModel.getPassword())).build();
 		userRepository.save(user);
 		LOGGER.debug("User is registered with username : " + userModel.getUserName());
@@ -129,13 +130,4 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
-	public boolean validateCredetails(String userName , String password) {
-		
-		User user = userRepository.findByUserName(userName);
-		if(user.getPassword().equals(passwordEncoder.encode(password))){
-			return true;
-		} 
-		return false;
-	}
-
 }

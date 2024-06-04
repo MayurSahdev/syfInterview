@@ -10,7 +10,5 @@ import lombok.NoArgsConstructor;
 public class UserModel {
 	
 	private String userName;
-    private String email;
     private String password;
-
 }

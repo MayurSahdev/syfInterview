@@ -1,5 +1,6 @@
 package com.syf.interview.imageresource.controller;
 
+import com.syf.interview.imageresource.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ public class ImageResourceRegistrationController {
 		userService.registerUser(userModel);
 		return "User Registered Successfully";
 	}
-	
+
 	@GetMapping("/publish")
 	public String publisMessagesOnKafka() {
 		userService.publishMessages();

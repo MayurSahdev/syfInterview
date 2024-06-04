@@ -2,6 +2,7 @@ package com.syf.interview.imageresource.controller;
 
 import com.syf.interview.imageresource.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,15 +17,15 @@ public class ImageResourceRegistrationController {
 	UserService userService;
 	
 	@PostMapping("/register")
-	public String registerUser(@RequestBody UserModel userModel) {
-		userService.registerUser(userModel);
-		return "User Registered Successfully";
+	public ResponseEntity<String> registerUser(@RequestBody UserModel userModel) {
+		User user = userService.registerUser(userModel);
+		return ResponseEntity.ok("User " + user.getUsername() + " Registered Successfully");
 	}
 
 	@GetMapping("/publish")
-	public String publisMessagesOnKafka() {
-		userService.publishMessages();
-		return "Images has been published Successfully";
+	public ResponseEntity<String> publisMessagesOnKafka() {
+		int numOfImages = userService.publishMessages();
+		return ResponseEntity.ok(numOfImages + " Images has been published Successfully");
 	}
 
 }

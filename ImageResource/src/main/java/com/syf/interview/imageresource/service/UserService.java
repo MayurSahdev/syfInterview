@@ -12,5 +12,5 @@ public interface UserService {
 	void updateImageTitle(ImageMetaData imageMetaData);
 	String getImage(String imageName);
 	void deleteImageService(String imageName);
-	void publishMessages();
+	int publishMessages();
 }

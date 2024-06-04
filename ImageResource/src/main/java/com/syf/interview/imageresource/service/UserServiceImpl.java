@@ -8,6 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
@@ -41,6 +42,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Value("${spring.kafka.topic}")
+	private String kafkaTopic;
 	
 	@Autowired
 	private KafkaProducer kafkaProducer;
@@ -117,7 +120,7 @@ public class UserServiceImpl implements UserService {
 	 * Method will trigger an event for kafka which will publish all the Image name with associated user.
 	 */
 	@Override
-	public void publishMessages() {
+	public int publishMessages() {
 		
 		// get all of the image details from Database
 		List<ImageDetail> imageList = imageDetailRepository.findAll();
@@ -125,9 +128,10 @@ public class UserServiceImpl implements UserService {
 		// iterate through list and publish 1 by 1. 
 		// for more RPM use batch publishing. 
 		for (ImageDetail imageDetail : imageList) {
-			Message<ImageDetail> message = MessageBuilder.withPayload(imageDetail).setHeader(KafkaHeaders.TOPIC, "userDetails").build();
+			Message<ImageDetail> message = MessageBuilder.withPayload(imageDetail).setHeader(KafkaHeaders.TOPIC, kafkaTopic).build();
 			kafkaProducer.sendMessage(message);
 		}
+		return imageList.size();
 	}
 	
 }
